@@ -1709,6 +1709,7 @@
 
 #define LCD_PINS_RS          1 
 #define LCD_PINS_ENABLE      3
+#define LCD_PINS_ENABLE_2    8
 #define LCD_PINS_D4          0
 #define LCD_PINS_D5          2
 #define LCD_PINS_D6          4
