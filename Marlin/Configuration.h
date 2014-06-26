@@ -112,9 +112,9 @@
 
 // If you are using a pre-configured hotend then you can use one of the value sets by uncommenting it
 // Ultimaker
-    #define  DEFAULT_Kp 23.58
-    #define  DEFAULT_Ki 1.11
-    #define  DEFAULT_Kd 125.53
+    #define  DEFAULT_Kp 28.39
+    #define  DEFAULT_Ki 1.40
+    #define  DEFAULT_Kd 143.71
 
 #endif // PIDTEMP
 
