@@ -194,7 +194,7 @@ static void lcd_status_screen()
         currentMenu = lcd_main_menu;
         encoderPosition = 0;
         lcd_quick_feedback();
-        lcd_implementation_init(); // to maybe revive the LCD if static electricity killed it.
+        lcd_implementation_init(0); // to maybe revive the LCD if static electricity killed it.
     }
 
 #ifdef ULTIPANEL_FEEDMULTIPLY
@@ -1123,7 +1123,7 @@ static void menu_action_setting_edit_bool(const char* pstr, bool* ptr)
 /** LCD API **/
 void lcd_init()
 {
-    lcd_implementation_init();
+    lcd_implementation_init(1);
 
 #ifdef NEWPANEL
     pinMode(BTN_EN1,INPUT);
@@ -1189,7 +1189,7 @@ void lcd_update()
     {
         lcdDrawUpdate = 2;
         lcd_oldcardstatus = IS_SD_INSERTED;
-        lcd_implementation_init(); // to maybe revive the LCD if static electricity killed it.
+        lcd_implementation_init(0); // to maybe revive the LCD if static electricity killed it.
 
         if(lcd_oldcardstatus)
         {

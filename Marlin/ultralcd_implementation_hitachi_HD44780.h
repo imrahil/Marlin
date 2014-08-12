@@ -205,7 +205,7 @@ extern volatile uint16_t buttons;  //an extended version of the last checked but
 #endif
 
 /* Custom characters defined in the first 8 characters of the LCD */
-#define LCD_STR_BEDTEMP     "\x00"
+#define LCD_STR_SLASH       "\x00"
 #define LCD_STR_DEGREE      "\x01"
 #define LCD_STR_THERMOMETER "\x02"
 #define LCD_STR_UPLEVEL     "\x03"
@@ -215,19 +215,19 @@ extern volatile uint16_t buttons;  //an extended version of the last checked but
 #define LCD_STR_CLOCK       "\x07"
 #define LCD_STR_ARROW_RIGHT "\x7E"  /* from the default character set */
 
-static void lcd_implementation_init()
+static void lcd_implementation_init(int splash)
 {
-    byte bedTemp[8] =
+    byte slash[8] =
     {
         B00000,
-        B11111,
-        B10101,
-        B10001,
-        B10101,
-        B11111,
+        B10000,
+        B01000,
+        B00100,
+        B00010,
+        B00001,
         B00000,
         B00000
-    }; //thanks Sonny Mounicou
+    }; 
     byte degree[8] =
     {
         B01100,
@@ -325,7 +325,7 @@ static void lcd_implementation_init()
     lcd.begin(LCD_WIDTH, LCD_HEIGHT);
 #endif
 
-    lcd.createChar(LCD_STR_BEDTEMP[0], bedTemp);
+    lcd.createChar(LCD_STR_SLASH[0], slash);
     lcd.createChar(LCD_STR_DEGREE[0], degree);
     lcd.createChar(LCD_STR_THERMOMETER[0], thermometer);
     lcd.createChar(LCD_STR_UPLEVEL[0], uplevel);
@@ -334,6 +334,73 @@ static void lcd_implementation_init()
     lcd.createChar(LCD_STR_FEEDRATE[0], feedrate);
     lcd.createChar(LCD_STR_CLOCK[0], clock);
     lcd.clear();
+
+    if (splash == 1)
+    {
+//      ___ _   _ ___ 
+//     / __| | | / __|
+//    | (_ | |_| \__ \
+//     \___|\___/|___/
+
+        lcd.setCursor(0, 0);
+        lcd.print("  ___ _   _ ___ ");
+        lcd.setCursor(0, 1);
+        lcd.print(" / __| | | / __|");
+        lcd.setCursor(0, 2);
+        lcd.print("| (_ | |_| ");
+        lcd.print(LCD_STR_SLASH[0]);
+        lcd.print("__ ");
+        lcd.print(LCD_STR_SLASH[0]);
+        lcd.setCursor(0, 3);
+        lcd.print(" ");
+        lcd.print(LCD_STR_SLASH[0]);
+        lcd.print("___|");
+        lcd.print(LCD_STR_SLASH[0]);
+        lcd.print("___/|___/");
+
+        _delay_ms(1500);	// wait
+        lcd.clear();
+
+//     ___ ___ __  __ ___  ___  ___  _  _ 
+//    / __|_ _|  \/  | _ \/ __|/ _ \| \| |
+//    \__ \| || |\/| |  _/\__ \ (_) | .` |
+//    |___/___|_|  |_|_|  |___/\___/|_|\_|
+ 
+        lcd.setCursor(0, 0);
+        lcd.print(" ___ ___ __  __ ___  ___  ___  _  _ ");
+        lcd.setCursor(0, 1);
+        lcd.print("/ __|_ _|  ");
+        lcd.print(LCD_STR_SLASH[0]);
+        lcd.print("/  | _ ");
+        lcd.print(LCD_STR_SLASH[0]);
+        lcd.print("/ __|/ _ ");
+        lcd.print(LCD_STR_SLASH[0]);
+        lcd.print("| ");
+        lcd.print(LCD_STR_SLASH[0]);
+        lcd.print("| |");
+        
+        lcd.setCursor(0, 2);
+        lcd.print(LCD_STR_SLASH[0]);
+        lcd.print("__ ");
+        lcd.print(LCD_STR_SLASH[0]);
+        lcd.print("| || |");
+        lcd.print(LCD_STR_SLASH[0]);
+        lcd.print("/| |  _/");
+        lcd.print(LCD_STR_SLASH[0]);
+        lcd.print("__ ");
+        lcd.print(LCD_STR_SLASH[0]);
+        lcd.print(" (_) | .` |");
+        lcd.setCursor(0, 3);
+        lcd.print("|___/___|_|  |_|_|  |___/");
+        lcd.print(LCD_STR_SLASH[0]);
+        lcd.print("___/|_|");
+        lcd.print(LCD_STR_SLASH[0]);
+        lcd.print("_|");
+
+        _delay_ms(1500);	// wait
+
+        lcd.clear();
+    }
 }
 static void lcd_implementation_clear()
 {
@@ -397,7 +464,9 @@ static void lcd_implementation_status_screen()
 #  else//Heated bed
     tHotend=int(degBed() + 0.5);
     tTarget=int(degTargetBed() + 0.5);
-    lcd.print(LCD_STR_BEDTEMP[0]);
+    // (c) imrahil - turned off
+    //lcd.print(LCD_STR_BEDTEMP[0]);
+    lcd.print(" ");
 #  endif
     lcd.print(itostr3(tHotend));
     lcd.print('/');
@@ -424,7 +493,9 @@ static void lcd_implementation_status_screen()
 #  else//Heated bed
     tHotend=int(degBed() + 0.5);
     tTarget=int(degTargetBed() + 0.5);
-    lcd.print(LCD_STR_BEDTEMP[0]);
+    // (c) imrahil - turned off
+    //lcd.print(LCD_STR_BEDTEMP[0]);
+    lcd.print(" ");
 #  endif
     lcd.print(itostr3(tHotend));
     lcd.print('/');
@@ -454,7 +525,9 @@ static void lcd_implementation_status_screen()
     tTarget=int(degTargetBed() + 0.5);
 
     lcd.setCursor(0, 1);
-    lcd.print(LCD_STR_BEDTEMP[0]);
+    // (c) imrahil - turned off
+    //lcd.print(LCD_STR_BEDTEMP[0]);
+    lcd.print(" ");
     lcd.print(itostr3(tHotend));
     lcd.print('/');
     lcd.print(itostr3left(tTarget));
