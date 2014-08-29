@@ -205,6 +205,7 @@ extern volatile uint16_t buttons;  //an extended version of the last checked but
 #endif
 
 /* Custom characters defined in the first 8 characters of the LCD */
+#define LCD_STR_BEDTEMP     "\x00"
 #define LCD_STR_SLASH       "\x00"
 #define LCD_STR_DEGREE      "\x01"
 #define LCD_STR_THERMOMETER "\x02"
@@ -215,7 +216,9 @@ extern volatile uint16_t buttons;  //an extended version of the last checked but
 #define LCD_STR_CLOCK       "\x07"
 #define LCD_STR_ARROW_RIGHT "\x7E"  /* from the default character set */
 
-static void lcd_implementation_init(byte splash)
+extern uint8_t splash = 1;
+
+static void lcd_implementation_init()
 {
     byte slash[8] =
     {
@@ -228,6 +231,17 @@ static void lcd_implementation_init(byte splash)
         B00000,
         B00000
     }; 
+    byte bedTemp[8] =
+    {
+        B00000,
+        B11111,
+        B10101,
+        B10001,
+        B10101,
+        B11111,
+        B00000,
+        B00000
+    }; //thanks Sonny Mounicou
     byte degree[8] =
     {
         B01100,
@@ -325,7 +339,11 @@ static void lcd_implementation_init(byte splash)
     lcd.begin(LCD_WIDTH, LCD_HEIGHT);
 #endif
 
-    lcd.createChar(LCD_STR_SLASH[0], slash);
+    if (splash == 1) {
+        lcd.createChar(LCD_STR_SLASH[0], slash);
+    } else {
+        lcd.createChar(LCD_STR_BEDTEMP[0], bedTemp);
+    }
     lcd.createChar(LCD_STR_DEGREE[0], degree);
     lcd.createChar(LCD_STR_THERMOMETER[0], thermometer);
     lcd.createChar(LCD_STR_UPLEVEL[0], uplevel);
@@ -400,6 +418,10 @@ static void lcd_implementation_init(byte splash)
         _delay_ms(1500);	// wait
 
         lcd.clear();
+        
+        splash = 0;
+
+        lcd.createChar(LCD_STR_BEDTEMP[0], bedTemp);
     }
 }
 static void lcd_implementation_clear()
@@ -464,8 +486,7 @@ static void lcd_implementation_status_screen()
 #  else//Heated bed
     tHotend=int(degBed() + 0.5);
     tTarget=int(degTargetBed() + 0.5);
-    // (c) imrahil - turned off
-    lcd.print(LCD_STR_THERMOMETER[0]);
+    lcd.print(LCD_STR_BEDTEMP[0]);
     lcd.print(" ");
 #  endif
     lcd.print(itostr3(tHotend));
@@ -493,8 +514,7 @@ static void lcd_implementation_status_screen()
 #  else//Heated bed
     tHotend=int(degBed() + 0.5);
     tTarget=int(degTargetBed() + 0.5);
-    // (c) imrahil - turned off
-    lcd.print(LCD_STR_THERMOMETER[0]);
+    lcd.print(LCD_STR_BEDTEMP[0]);
     lcd.print(" ");
 #  endif
     lcd.print(itostr3(tHotend));
@@ -525,8 +545,7 @@ static void lcd_implementation_status_screen()
     tTarget=int(degTargetBed() + 0.5);
 
     lcd.setCursor(0, 1);
-    // (c) imrahil - turned off
-    lcd.print(LCD_STR_THERMOMETER[0]);
+    lcd.print(LCD_STR_BEDTEMP[0]);
     lcd.print(" ");
     lcd.print(itostr3(tHotend));
     lcd.print('/');
