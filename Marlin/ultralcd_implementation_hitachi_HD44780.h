@@ -215,7 +215,7 @@ extern volatile uint16_t buttons;  //an extended version of the last checked but
 #define LCD_STR_CLOCK       "\x07"
 #define LCD_STR_ARROW_RIGHT "\x7E"  /* from the default character set */
 
-static void lcd_implementation_init(int splash)
+static void lcd_implementation_init(byte splash)
 {
     byte slash[8] =
     {
@@ -465,7 +465,7 @@ static void lcd_implementation_status_screen()
     tHotend=int(degBed() + 0.5);
     tTarget=int(degTargetBed() + 0.5);
     // (c) imrahil - turned off
-    //lcd.print(LCD_STR_BEDTEMP[0]);
+    lcd.print(LCD_STR_THERMOMETER[0]);
     lcd.print(" ");
 #  endif
     lcd.print(itostr3(tHotend));
@@ -494,7 +494,7 @@ static void lcd_implementation_status_screen()
     tHotend=int(degBed() + 0.5);
     tTarget=int(degTargetBed() + 0.5);
     // (c) imrahil - turned off
-    //lcd.print(LCD_STR_BEDTEMP[0]);
+    lcd.print(LCD_STR_THERMOMETER[0]);
     lcd.print(" ");
 #  endif
     lcd.print(itostr3(tHotend));
@@ -526,7 +526,7 @@ static void lcd_implementation_status_screen()
 
     lcd.setCursor(0, 1);
     // (c) imrahil - turned off
-    //lcd.print(LCD_STR_BEDTEMP[0]);
+    lcd.print(LCD_STR_THERMOMETER[0]);
     lcd.print(" ");
     lcd.print(itostr3(tHotend));
     lcd.print('/');

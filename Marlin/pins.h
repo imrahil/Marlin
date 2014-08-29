@@ -1684,8 +1684,8 @@
   #define X_STOP_PIN         25
   #define Y_STOP_PIN         26
   #define Z_STOP_PIN         27
-  #define TEMP_0_PIN          6  // Extruder / Analog pin numbering
-  #define TEMP_BED_PIN        7  // Bed / Analog pin numbering
+  #define TEMP_0_PIN          7  // Extruder / Analog pin numbering
+  #define TEMP_BED_PIN        6  // Bed / Analog pin numbering
 #else  // Printrboard
   #define X_STOP_PIN         35
   #define Y_STOP_PIN          8
